@@ -26,11 +26,29 @@ Permite mostrar notificaciones simples o con confirmación, con personalización
 ### 🔹 Notificación básica
 
 ```js
+// Notificación básica
 showNotify({
-  type: 'success',           // success, danger, info
-  titulo: 'Operación exitosa',
-  descripcion: 'Todo salió bien',
-  tiempo: 5000,              // milisegundos
-  icono: '✅',              // emoji o texto
-  theme: 'light'             // light, dark, auto
+    type: 'success',           // success, danger, info
+    titulo: 'Operación exitosa',
+    descripcion: 'Todo salió bien',
+    tiempo: 5000,              // milisegundos
+    icono: '✅',              // emoji o texto
+    theme: 'light'            // light, dark, auto
+});
+
+// Notificación de confirmación
+showNotify({
+    type: 'danger',
+    titulo: '¿Eliminar elemento?',
+    descripcion: 'Esta acción no se puede deshacer',
+    tiempo: 0,                // 0 = no auto-cerrar
+    confirmacion: {
+        textoSi: 'Sí, eliminar',
+        textoNo: 'Cancelar',
+        onConfirm: async () => {
+            // Ejecutar fetch o acción
+            await fetch('/api/delete', { method: 'DELETE' });
+            console.log('Elemento eliminado');
+        }
+    }
 });
